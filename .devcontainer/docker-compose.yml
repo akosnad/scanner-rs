@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  vscode:
+    build:
+      context: .
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    volumes:
+      - ../:/workspace
+      - ~/.ssh:/home/dev/.ssh
+      - cargo-cache:/home/dev/.cargo
+    command: sleep infinity
+
+volumes:
+  cargo-cache:

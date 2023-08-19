@@ -1,0 +1,19 @@
+{
+	"name": "scanner-rs",
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+	"service": "vscode",
+	"remoteUser": "dev",
+	"workspaceFolder": "/workspace",
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"rust-lang.rust-analyzer"
+			]
+		}
+	}
+}
