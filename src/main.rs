@@ -1,6 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use eframe::egui;
+use eframe::{egui, Renderer};
 
 fn main() -> Result<(), eframe::Error> {
     let options = eframe::NativeOptions {
@@ -34,5 +34,6 @@ impl eframe::App for ScannerApp {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.heading("Scanner");
         });
+        ctx.set_cursor_icon(egui::CursorIcon::default());
     }
 }

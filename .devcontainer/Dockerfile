@@ -1,17 +1,25 @@
-FROM alpine:latest
+FROM rust:latest
 
 ARG USER_ID
 ARG GROUP_ID
 
-RUN apk add rustup bash git build-base libx11 gnupg
+# needed packages
+RUN apt update && apt install -y sudo
+
+# dev user
 RUN passwd -d root; \
-    addgroup -g ${GROUP_ID:-0} dev && adduser -u ${USER_ID:-0} -D -G dev -s /bin/bash dev
+    echo '%dev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers; \
+    groupadd -g ${GROUP_ID:-0} dev && useradd -m -u ${USER_ID:-0} -g dev -s /bin/bash dev
+
+# rust toolchain
+RUN sudo -u dev bash -c "echo 'export PATH=/usr/local/cargo/bin:$PATH' >> /home/dev/.bashrc"
+RUN rustup default stable && rustup component add rustfmt
+
+# additional packages
+RUN apt install -y bash git gnupg libwayland-dev weston && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 USER dev
-RUN rustup-init -y \
-    --default-host x86_64-unknown-linux-musl \
-    --default-toolchain stable \
-    --profile default \
-    -t x86_64-unknown-linux-gnu
-
 WORKDIR /workspace
