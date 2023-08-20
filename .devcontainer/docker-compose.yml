@@ -10,7 +10,7 @@ services:
     volumes:
       - ../:/workspace
       - ~/.ssh:/home/dev/.ssh
-      - ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}
       - cargo-cache:/home/dev/.cargo
     command: sleep infinity
     environment:

@@ -16,7 +16,7 @@ RUN sudo -u dev bash -c "echo 'export PATH=/usr/local/cargo/bin:$PATH' >> /home/
 RUN rustup default stable && rustup component add rustfmt
 
 # additional packages
-RUN apt install -y bash git gnupg libwayland-dev weston && \
+RUN apt install -y bash git gnupg libwayland-dev weston dmz-cursor-theme && \
     apt-get clean autoclean && \
     apt-get autoremove --yes && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/
